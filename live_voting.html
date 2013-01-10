@@ -1,0 +1,35 @@
+<head>
+  <title>live_voting</title>
+</head>
+
+<body>
+    <div class="container">
+      <div class="pull-right">
+        {{loginButtons}}
+      </div>
+      {{#if currentUser}}
+        {{> main}}
+      {{else}}
+        <div class="hero-unit">
+          <h1>You have to login to use this system</h1>
+        </div>
+      {{/if }}
+    </div>
+</body>
+
+<template name="main">
+  {{#if inSession}}
+    <h1>{{currentVotingSessionName}}</h1>
+    <button id="back" class="btn btn-danger">Back</button>
+
+  {{else}}
+    {{> selectSession}}
+  {{/if}}
+</template>
+
+<template name="selectSession">
+  <h1> Select a Voting Session </h1>
+    {{#each allSessions}}
+      <button class="btn btn-large">{{title}}</button>
+    {{/each}}
+</template>
