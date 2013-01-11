@@ -4,32 +4,46 @@
 
 <body>
     <div class="container">
-      <div class="pull-right">
-        {{loginButtons}}
+      <div class="container">
+          <div class="span3">
+              {{> userPanel}}
+          </div>
       </div>
-      {{#if currentUser}}
-        {{> main}}
-      {{else}}
-        <div class="hero-unit">
-          <h1>You have to login to use this system</h1>
-        </div>
-      {{/if }}
+      {{> facade}}
     </div>
 </body>
 
-<template name="main">
-  {{#if inSession}}
-    <h1>{{currentVotingSessionName}}</h1>
-    <button id="back" class="btn btn-danger">Back</button>
-
-  {{else}}
-    {{> selectSession}}
+<template name='userPanel'>
+  {{loginButtons}} 
+  {{#if isTrainer}}
+  <div class="label label-info">TRAINER</div>
   {{/if}}
 </template>
 
-<template name="selectSession">
-  <h1> Select a Voting Session </h1>
-    {{#each allSessions}}
-      <button class="btn btn-large">{{title}}</button>
-    {{/each}}
+<template name='facade'>
+    {{#if currentUser}}
+    {{> main}}
+    {{else}}
+    <div class="hero-unit">
+        <h1>Welcome to live voting</h1>
+    </div>
+    {{/if }}
 </template>
+
+<template name="main">
+  {{#if currentVotingSession}}
+    {{#if isTrainer}}
+        {{> sessionShowTrainer}}
+    {{else}}
+        {{> sessionShowTrainee}}
+    {{/if}}
+
+  {{else}}
+    {{#if isTrainer}}
+        {{> selectSessionTrainer}}
+    {{else}}
+        {{> selectSessionTrainee}}
+    {{/if}}
+  {{/if}}
+</template>
+

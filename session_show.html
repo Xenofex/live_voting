@@ -1,0 +1,30 @@
+<template name="sessionShowTrainer">
+    <div class="pull-right">
+        <button id="back" class="btn btn-danger">Terminate</button>
+    </div>
+    {{#with currentVotingSession}}
+    <h1>{{title}}</h1>
+    {{/with}}
+    <ul class="inline">
+    {{#each traineesInSession currentVotingSession._id}}
+    <li>{{profile.name}}</li>
+    {{/each }}
+    </ul>
+</template>
+
+<template name="sessionShowTrainee">
+    <div class="pull-right">
+        <button id="back" class="btn btn-danger">Leave</button>
+    </div>
+    {{#with currentVotingSession}}
+    <h1>{{title}}</h1>
+    {{/with}}
+    {{#with trainer}}
+    <h4><span class="label label-info">Trainer:</span> {{profile.name}}</h4>
+    {{/with}}
+
+    {{> currentQuestionTrainee}}
+</template>
+
+<template name="currentQuestionTrainee">
+</template>

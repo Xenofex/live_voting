@@ -1,0 +1,17 @@
+<template name="selectSessionTrainer">
+  <h1> Select a Voting Session to Start</h1>
+    {{#each allSessions}}
+    <button class="btn btn-large {{#if trainer_id}}btn-danger{{/if}}">{{title}}</button>
+    {{/each}}
+</template>
+
+<template name="selectSessionTrainee">
+  <h1> Join a Voting Session</h1>
+  {{#each availableSessions}}
+      <button class="btn btn-large">{{title}}</button>
+  {{else}}
+      <div class="alert">
+          No avalilable sessions now! Please wait...
+      </div>
+  {{/each}}
+</template>
