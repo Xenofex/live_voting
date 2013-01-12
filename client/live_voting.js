@@ -117,8 +117,10 @@ Template.questionShow.hasVoted = function(answer) {
 Template.questionShow.rendered = function() {
     var chart = d3.select('#questionBarChart');
     var chartWidth = parseFloat(chart.style('width')); 
-    var Max = 30;
-    var data = [10, 25, 12, 8];
+    var Max = traineesInSession(currentVotingSession()._id).count();
+    var data = _.map(currentQuestion().votes, function(e) {
+        return e.length;
+    });
     var marginTop = 30,
         marginBottom = 30,
         gap = 10;
@@ -132,5 +134,19 @@ Template.questionShow.rendered = function() {
         .attr('width', function(d) { 
             return d / Max * chartWidth; 
         });
+
+       chart.selectAll("text")
+            .data(data)
+            .enter().append("text")
+            .attr("x", function(d) {
+                return d / Max * chartWidth; 
+            })
+            .attr("y", function(d, i) {
+                return marginTop + i * (height + gap); 
+            })
+            .attr("dx", -8) // padding-right
+            .attr("dy", "2em") // vertical-align: middle
+            .attr("text-anchor", "end") // text-align: right
+            .text(String);
 
 };

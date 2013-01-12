@@ -43,6 +43,11 @@ body {
 }
 
 #questionBarChart rect {
-  stroke: white;
-  fill: steelblue;
+    stroke: white;
+    fill: steelblue;
+}
+
+#questionBarChart text {
+    fill: white;
+    font-size: 16px;
 }

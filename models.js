@@ -4,7 +4,7 @@ App = new Meteor.Collection('app');
 
 function _save(doc) {
     if (doc._id) {
-        this.update(doc._id, doc);
+        this.update(doc._id, { $set: doc });
     } else {
         this.insert(doc);
     }
@@ -25,12 +25,14 @@ function initializeVotes(question) {
     }
 
     Questions.update(question._id, { $set: { votes: votes }} );
+
+    return votes;
 }
 
 function userHasVotedQuestion(user, question, idx) {
     var votes = question.votes;
     if (!votes) {
-        initializeVotes(question);
+        votes = initializeVotes(question);
     }
 
     return _.indexOf(votes[idx], user._id) >= 0;
