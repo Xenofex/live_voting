@@ -6,3 +6,43 @@
 body {
     padding-top: 40px;
 }
+
+#questionBarChart {
+    width: 90%;
+    height: 300px;
+    border: solid 2px #DDD;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#answers ul {
+    list-style: none;
+}
+
+#answers li { 
+    height: 25%;
+    margin: 10px;
+    padding: 10px;
+    background-color: #DDD;
+    height: 45px;
+}
+
+#answers ul.trainee li {
+    cursor: pointer;
+}
+
+#answers ul.trainee li:hover { 
+    background-color: #faa732;
+}
+
+#answers ul.trainee li.selected { 
+    background-color: #363636;
+    cursor: default;
+    color: white;
+}
+
+#questionBarChart rect {
+  stroke: white;
+  fill: steelblue;
+}

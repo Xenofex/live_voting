@@ -4,3 +4,4 @@ Meteor.startup(function () {
         seedDB();
     }
 });
+

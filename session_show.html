@@ -10,6 +10,7 @@
     <li>{{profile.name}}</li>
     {{/each }}
     </ul>
+    {{> currentQuestionTrainer}}
 </template>
 
 <template name="sessionShowTrainee">
@@ -27,4 +28,33 @@
 </template>
 
 <template name="currentQuestionTrainee">
+    {{> questionShow}}
+</template>
+
+<template name="currentQuestionTrainer">
+    {{> questionShow}}
+    <ul class="pager">
+        <li class="previous"><a id="prev" >&larr; Previous</a></li>
+        <li class="next"><a id="next">Next &rarr;</a></li>
+    </ul>
+</template>
+
+<template name="questionShow">
+    {{#with currentQuestion}}
+        <h4>{{question}}</h4>
+        <div class="row-fluid">
+            <div id="answers" class="span6">
+                <ul class="{{traineeClass}}">
+                    {{#each answers}}
+                    <li class="{{hasVoted this}}">{{this}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+            <div class="span6">
+                <svg id="questionBarChart">
+                </svg>
+            </div>
+        
+        </div>
+    {{/with}}
 </template>
