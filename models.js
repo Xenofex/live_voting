@@ -18,22 +18,26 @@ function isTrainer(user) {
     }
 }
 
-function initializeVotes(question) {
-    votes = [];
-    for (var i = 0; i < question.answers.length; i++) {
-        votes[i] = [];
-    }
-
-    Questions.update(question._id, { $set: { votes: votes }} );
-
-    return votes;
-}
+// This function should have a callback
+// function initializeVotes(question) {
+//     votes = [];
+//     for (var i = 0; i < question.answers.length; i++) {
+//         votes[i] = [];
+//     }
+// 
+//     Questions.update(question._id, { $set: { votes: votes }} );
+// 
+//     return votes;
+// }
 
 function userHasVotedQuestion(user, question, idx) {
     var votes = question.votes;
-    if (!votes) {
-        votes = initializeVotes(question);
-    }
+    // Disabled. it's preinitialized now. The update command in the client has
+    // to be async.
+    // if (!qid) {
+    // if (!votes) {
+    //     votes = initializeVotes(question);
+    // }
 
     return _.indexOf(votes[idx], user._id) >= 0;
 }
@@ -77,6 +81,7 @@ Meteor.methods({
     },
 
     currentUserVote: function(q, idx) {
+
         if (!userHasVotedQuestion(Meteor.user(), q, idx)) {
             userVoteQuestion(Meteor.user(), q, idx);
         }

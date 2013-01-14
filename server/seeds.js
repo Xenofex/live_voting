@@ -27,11 +27,18 @@ function seedDB() {
             answers: ['Q' + i + ' Answer 1',
             'Q' + i + ' Answer 2',
             'Q' + i + ' Answer 3',
-            'Q' + i + ' Answer 4' ]});
+            'Q' + i + ' Answer 4' ],
+            // Preinitialize the votes. All db commands in the client side are async.
+            // It's not convenient to lazy initialize this field
+            votes: [[], [], [], []]}); 
         var j = Math.floor( i / 4 );
         if (votingSessions[j]) {
             votingSessions[j].question_ids.push(id);
+            if (!votingSessions[j].current_question_id) {
+                votingSessions[j].current_question_id = id;
+            }
         }
+
     }
 
     console.log('votingSessions.count: ' + votingSessions.length);

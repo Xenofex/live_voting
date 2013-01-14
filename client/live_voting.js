@@ -1,23 +1,29 @@
 function currentVotingSession() {
     var u = Meteor.user();
-    if (isTrainer(u)) {
-        return VotingSessions.findOne({ trainer_id: u._id});
-    } else {
-        if (Meteor.loggingIn()) {
-            return null;
+    if (u) {
+        if (isTrainer(u)) {
+            return VotingSessions.findOne({ trainer_id: u._id});
         } else {
-            return VotingSessions.findOne(u.profile.voting_session_id);
+            if (Meteor.loggingIn()) {
+                return null;
+            } else {
+                return VotingSessions.findOne(u.profile.voting_session_id);
+            }
         }
+    } else {
+        return null;
     }
 }
 
 function currentQuestion() {
     var session = currentVotingSession();
     var qid = session.current_question_id;
-    if (!qid) {
-        qid = _.first(session.question_ids);
-        VotingSessions.update(session._id, { $set: { current_question_id: qid }});
-    }
+    // Disabled. it's preinitialized now. The update command in the client has
+    // to be async.
+    // if (!qid) {
+    //     qid = _.first(session.question_ids);
+    //     VotingSessions.update(session._id, { $set: { current_question_id: qid }});
+    // }
 
     return Questions.findOne(qid);
 }
@@ -132,21 +138,21 @@ Template.questionShow.rendered = function() {
         })
         .attr('x', 0)
         .attr('width', function(d) { 
-            return d / Max * chartWidth; 
+            return d / Max * chartWidth || 0; 
         });
 
-       chart.selectAll("text")
-            .data(data)
-            .enter().append("text")
-            .attr("x", function(d) {
-                return d / Max * chartWidth; 
-            })
-            .attr("y", function(d, i) {
-                return marginTop + i * (height + gap); 
-            })
-            .attr("dx", -8) // padding-right
-            .attr("dy", "2em") // vertical-align: middle
-            .attr("text-anchor", "end") // text-align: right
-            .text(String);
+   chart.selectAll("text")
+        .data(data)
+        .enter().append("text")
+        .attr("x", function(d) {
+            return d / Max * chartWidth || 0; 
+        })
+        .attr("y", function(d, i) {
+            return marginTop + i * (height + gap); 
+        })
+        .attr("dx", -8) // padding-right
+        .attr("dy", "2em") // vertical-align: middle
+        .attr("text-anchor", "end") // text-align: right
+        .text(String);
 
 };
